@@ -13,6 +13,8 @@
 # Short-Description: run cron daemon
 ### END INIT INFO
 
+# set -x
+
 prog="cloudboot-server"
 
 # Source function library.
@@ -20,14 +22,17 @@ prog="cloudboot-server"
 
 start() {
     echo -n $"Starting $prog: "
-    nohup $prog &>/dev/null &
+    # nohup $prog &>/dev/null &
+    nohup $prog &> /var/log/server.log &
     sleep 1s
     pidof /usr/bin/$prog &>/dev/null && success || failure
+    echo
 }
 
 stop() {
     echo -n $"Stopping $prog: "
     kill `pidof /usr/bin/$prog` &>/dev/null && success || failure
+    echo
 }
 
 restart() {
